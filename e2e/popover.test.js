@@ -20,7 +20,7 @@ describe('Inn Form', () => {
     await page.waitFor('.btn');
   });
 
-   test('test popover', async () => {
+  test('test popover', async () => {
     await page.waitForSelector('body');
     jest.setTimeout(20000);
     await page.goto('http://localhost:9000');
@@ -34,11 +34,7 @@ describe('Inn Form', () => {
     await page.waitFor('.popover');
 
     afterEach(async () => {
-    await browser.close();
+      await browser.close();
+    });
   });
-
 });
-
-
-
-})

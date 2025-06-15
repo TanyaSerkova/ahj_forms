@@ -1,27 +1,25 @@
-
 const initPopover = () => {
   const db = new WeakMap();
 
-  const initElement = (element) => {
-    element.addEventListener("click", () => togglePopover(element));
+  const createElement = (tagname, attrs, ...children) => {
+    const element = Object.assign(document.createElement(tagname), attrs);
+    element.append(...children);
+
+    return element;
   };
 
-  const togglePopover = (element) => {
-    if (db.has(element)) {
-      closePopover(element);
-      return;
-    }
-    openPopover(element);
-  };
+  const createPopover = (element) => {
+    const title = element.dataset.popoverTitle;
+    const content = element.dataset.popoverContent;
 
-  const openPopover = (element) => {
-    const popover = createPopover(element);
+    const container = createElement(
+      'div',
+      { className: 'popover' },
+      createElement('div', { className: 'popover__title' }, title),
+      createElement('div', { className: 'popover__body' }, content),
+    );
 
-    document.body.append(popover);
-
-    Object.assign(popover.style, getPopoverStyle(element, popover));
-
-    db.set(element, popover);
+    return container;
   };
 
   const getPopoverStyle = (element, popover) => {
@@ -40,18 +38,11 @@ const initPopover = () => {
     return style;
   };
 
-  const createPopover = (element) => {
-    const title = element.dataset.popoverTitle;
-    const content = element.dataset.popoverContent;
-
-    const container = createElement(
-      "div",
-      { className: "popover" },
-      createElement("div", { className: "popover__title" }, title),
-      createElement("div", { className: "popover__body" }, content),
-    );
-
-    return container;
+  const openPopover = (element) => {
+    const popover = createPopover(element);
+    document.body.append(popover);
+    Object.assign(popover.style, getPopoverStyle(element, popover));
+    db.set(element, popover);
   };
 
   const closePopover = (element) => {
@@ -60,20 +51,25 @@ const initPopover = () => {
     db.delete(element);
   };
 
-  const elements = [...document.querySelectorAll("[data-popover-content]")];
+  const togglePopover = (element) => {
+    if (db.has(element)) {
+      closePopover(element);
+      return;
+    }
+    openPopover(element);
+  };
+
+  const initElement = (element) => {
+    element.addEventListener('click', () => togglePopover(element));
+  };
+
+  const elements = [...document.querySelectorAll('[data-popover-content]')];
 
   for (const element of elements) {
     initElement(element);
   }
 };
 
-const createElement = (tagname, attrs, ...children) => {
-  const element = Object.assign(document.createElement(tagname), attrs);
-  element.append(...children);
-
-  return element;
-};
-
 initPopover();
 
-export default initPopover;
+export default initPopover();
