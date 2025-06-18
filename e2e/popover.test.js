@@ -17,7 +17,7 @@ describe('Inn Form', () => {
   test('Form should render on page start', async () => {
     await page.goto('http://localhost:9000');
 
-    await page.waitFor('.btn');
+    await page.waitForTimeout('.btn');
   });
 
   test('test popover', async () => {
@@ -25,13 +25,13 @@ describe('Inn Form', () => {
     jest.setTimeout(20000);
     await page.goto('http://localhost:9000');
 
-    await page.waitFor('.btn');
+    await page.waitForTimeout('.btn');
 
     const btn = await page.$('.btn');
 
     await btn.click();
 
-    await page.waitFor('.popover');
+    await page.waitForTimeout('.popover');
 
     afterEach(async () => {
       await browser.close();
