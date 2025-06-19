@@ -1,3 +1,5 @@
+jest.setTimeout(20000);
+
 import puppeteer from 'puppeteer';
 
 describe('Inn Form', () => {
@@ -22,19 +24,17 @@ describe('Inn Form', () => {
 
   test('test popover', async () => {
     await page.waitForSelector('body');
-    jest.setTimeout(20000);
     await page.goto('http://localhost:9000');
-
-    await page.waitForTimeout('.btn');
+    await page.waitForSelector('.btn');
 
     const btn = await page.$('.btn');
 
     await btn.click();
 
-    await page.waitForTimeout('.popover');
-
-    afterEach(async () => {
-      await browser.close();
-    });
+    await page.waitForSelector('.popover');
   });
+
+  afterEach(async () => {
+  await browser.close();
+});
 });

@@ -6,9 +6,8 @@ describe('Page start', () => {
 
   beforeEach(async () => {
     browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 100,
-      devtools: true,
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     page = await browser.newPage();
@@ -17,7 +16,7 @@ describe('Page start', () => {
   test('test', async () => {
     await page.goto('http://localhost:9000');
 
-    await page.waitForTimeout('body');
+    await page.waitForSelector('body');
   });
 
   afterEach(async () => {

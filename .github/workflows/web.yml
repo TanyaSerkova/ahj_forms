@@ -41,6 +41,8 @@ jobs:
           node-version: 22.14.0
           cache: 'yarn'
       - run: yarn
+      - run: yarn start &
+      - run: sleep 5
       - run: yarn e2e
 
   build:
