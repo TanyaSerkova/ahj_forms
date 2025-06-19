@@ -1,6 +1,6 @@
-jest.setTimeout(20000);
-
 import puppeteer from 'puppeteer';
+
+jest.setTimeout(20000);
 
 describe('Inn Form', () => {
   let browser;
@@ -8,9 +8,8 @@ describe('Inn Form', () => {
 
   beforeEach(async () => {
     browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 100,
-      devtools: true,
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     page = await browser.newPage();
@@ -35,6 +34,6 @@ describe('Inn Form', () => {
   });
 
   afterEach(async () => {
-  await browser.close();
-});
+    await browser.close();
+  });
 });
